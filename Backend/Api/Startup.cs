@@ -25,11 +25,7 @@ namespace Api
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(name: AllowSpecificOrigins,
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("http://localhost:4200");
-                                  });
+                options.AddPolicy(name: AllowSpecificOrigins, builder => { builder.WithOrigins("http://localhost:4200"); });
             });
 
             services.AddControllers();
