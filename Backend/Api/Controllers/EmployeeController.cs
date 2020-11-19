@@ -24,9 +24,9 @@ namespace Api.Controllers
 
         // GET: api/Employee/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<IEnumerable<EmployeeDTO>> Get(int id)
         {
-            return "value";
+            return await employeeService.GetEmployee(id);
         }
     }
 }

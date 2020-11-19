@@ -5,6 +5,7 @@
 
     public interface IEmployeeBusinessService
     {
+        Task<IEnumerable<EmployeeDTO>> GetEmployee(int id);
         Task<IEnumerable<EmployeeDTO>> GetEmployees();
     }
 }

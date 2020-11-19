@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../../models/employee';
 import { HttpClient } from '@angular/common/http';
+import { stringify } from 'querystring';
+import { strict } from 'assert';
 
 @Component({
   selector: 'app-employees',
@@ -17,9 +19,25 @@ export class EmployeesComponent implements OnInit
 
   ngOnInit(): void 
   {
-    this.http.get<any>(this.url).subscribe(data => {
-      this.employees = data;
-   },error => this.error = error);
+    this.getEmployees("");
   }
 
+  getEmployees(idEmployee: string): void 
+  {
+    let _url : string = this.url;
+  
+    if (idEmployee) 
+    {
+      _url = this.url + "/" + Number(idEmployee);
+    }
+    
+    this.http.get<any>(_url).subscribe(data => 
+      {
+        this.employees = data;
+      },
+      error => 
+        {
+          this.error = error; console.log(error)
+        });
+  }
 }
