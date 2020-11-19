@@ -46,6 +46,8 @@ namespace Api
 
             app.UseRouting();
 
+            app.UseCors(AllowSpecificOrigins);
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
