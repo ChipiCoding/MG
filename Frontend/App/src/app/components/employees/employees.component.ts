@@ -1,8 +1,8 @@
+import { ReturnStatement } from '@angular/compiler';
+import { error } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../../models/employee';
-import { HttpClient } from '@angular/common/http';
-import { stringify } from 'querystring';
-import { strict } from 'assert';
+import { EmployeeService  }  from '../../services/employee.service'
 
 @Component({
   selector: 'app-employees',
@@ -10,34 +10,24 @@ import { strict } from 'assert';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit 
-{
-  url: string = 'https://localhost:11223/api/employee';
-  employees: Employee[];
-  error;
+{  
+  employees: Employee[];  
 
-  constructor(private http: HttpClient) { }
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void 
-  {
+  {    
     this.getEmployees("");
   }
 
-  getEmployees(idEmployee: string): void 
+  getEmployees(id: string): void 
   {
-    let _url : string = this.url;
-  
-    if (idEmployee) 
+    this.employeeService.getEmployees(id).subscribe(employees => 
     {
-      _url = this.url + "/" + Number(idEmployee);
-    }
-    
-    this.http.get<any>(_url).subscribe(data => 
-      {
-        this.employees = data;
-      },
-      error => 
-        {
-          this.error = error; console.log(error)
-        });
+      this.employees = employees;        
+    }, error => 
+    {
+      alert("Only numbers are allowed for searching");
+    });;
   }
 }
